@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { wineData } from "./constants/wineData";
+import { MantineProvider } from "@mantine/core";
+import StatTable from "./components/StatTable/StatTable";
 
 function App() {
+  const data = wineData.map((item) => {
+    return {
+      ...item,
+      Gamma: (item.Ash * item.Hue) / item.Magnesium,
+    };
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MantineProvider>
+      <div style={{ padding: "30px" }}>
+        <StatTable data={data} baseStat="Flavanoids" />
+      </div>
+      <div style={{ padding: "30px" }}>
+        <StatTable data={data} baseStat="Gamma" />
+      </div>
+    </MantineProvider>
   );
 }
 
